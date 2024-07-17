@@ -35,7 +35,7 @@ function SideNav(props) {
 
         <Divider />
         <ListItem _hover={{ backgroundColor: "orange", borderRadius: "5px", transition: "0.3s" }}>
-          <NavLink to="/" style={{ display: "flex", alignItems: "center", padding: "10px 20px" }}>
+          <NavLink to="/add" style={{ display: "flex", alignItems: "center", padding: "10px 20px" }}>
             <FiPlusSquare style={{ marginRight: "8px" }} />
             Add Product
           </NavLink>
