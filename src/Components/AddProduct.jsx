@@ -23,6 +23,7 @@ function AddProduct() {
         productDescription,
         productPrice,
         productImageUrl,
+        added: Date.now(),
       };
       const resp = await axios.post("http://localhost:3000/products", newProduct);
       console.log("Product added successfully:", resp.data);

@@ -4,22 +4,22 @@
       "id": "9ec7c67a-d885-44af-bc05-b9b1b35c782c",
       "email": "abc@gmail.com",
       "password": "12345"
-    }
-  ],
-  "products": [
-    {
-      "id": "52a8fbe3-bfee-4dd5-ba34-240aa4b16b8d",
-      "productName": "Nike JoyRide",
-      "productDescription": "Nike Joyride shoes for all people",
-      "productPrice": "2500",
-      "productImageUrl": "https://c.static-nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/g1ljiszo4qhthfpluzbt/123-joyride-cdp-apla-xa-xp.jpg"
     },
     {
-      "id": "36fb2d7b-ea12-4625-8146-23a42a498231",
-      "productName": "Nike Air Zoom 331",
-      "productDescription": "Nike Air Zoom for sports person",
-      "productPrice": "4500",
-      "productImageUrl": "https://rukminim2.flixcart.com/image/850/1000/l47cu4w0/shoe/9/y/f/-original-imagf5zh7zffqsy4.jpeg?q=20&crop=false"
+      "id": "16378bcd-963a-4039-9e35-15c84b022985",
+      "email": "def@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": "b4354e28-4278-46f5-809e-c87bb298fb3b",
+      "email": "asdf@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": "b6c09782-ad04-44d4-873e-045275f5d257",
+      "email": "email@gmail.com",
+      "password": "12345"
     }
-  ]
+  ],
+  "products": []
 }
