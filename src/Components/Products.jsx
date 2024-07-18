@@ -1,10 +1,13 @@
-import { Flex, Select, Image, FormControl, Container, Input, Textarea, FormLabel, Text, Heading, CardFooter, SimpleGrid, Card, CardBody, Divider, Stack, Button, Modal, IconButton, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, ButtonGroup } from "@chakra-ui/react";
+import { Flex, Select, Image, FormControl, Box, Input, Textarea, VStack, FormLabel, Text, Heading, CardFooter, SimpleGrid, Card, CardBody, Divider, Stack, Button, Modal, IconButton, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, ButtonGroup } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { FiArrowRightCircle, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiArrowRightCircle, FiEdit2, FiTrash2, FiSearch } from "react-icons/fi";
 function Products() {
+  const location = useLocation();
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [productName, setProductName] = useState("");
@@ -16,6 +19,7 @@ function Products() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedProductEdit, setSelectedProductEdit] = useState(null);
   const [sortBy, setSortBy] = useState("default");
+  const [query, setQuery] = useState("");
   useEffect(() => {
     if (selectedProductEdit) {
       setProductName(selectedProductEdit.productName);
@@ -28,6 +32,7 @@ function Products() {
     try {
       const response = await axios.get("http://localhost:3000/products");
       setProducts(response.data);
+      setFilteredProducts(response.data);
       setIsLoading(true);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -36,7 +41,7 @@ function Products() {
   };
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [location]);
   const handleViewDetails = (product) => {
     setSelectedProduct(product);
     setShowModal(true);
@@ -80,6 +85,7 @@ function Products() {
         return product.id !== productId;
       });
       setProducts(updatedProducts);
+      setFilteredProducts(updatedProducts);
       console.log("Product deleted successfully");
       Swal.fire({
         title: "Product Deleted Successful",
@@ -91,7 +97,7 @@ function Products() {
     }
   };
   const sortProducts = (criteria) => {
-    let sortedProducts = [...products];
+    let sortedProducts = [...filteredProducts];
 
     switch (criteria) {
       case "lowToHigh":
@@ -105,23 +111,44 @@ function Products() {
         break;
     }
 
-    setProducts(sortedProducts);
+    setFilteredProducts(sortedProducts);
     setSortBy(criteria);
   };
+  const handleSearch = () => {
+    const searchResults = products.filter((product) => {
+      const productNameMatches = product.productName.toLowerCase().includes(query.toLowerCase());
+      const productDescriptionMatches = product.productDescription.toLowerCase().includes(query.toLowerCase());
+      return productNameMatches || productDescriptionMatches;
+    });
+
+    setFilteredProducts(searchResults);
+  };
+
   return (
     <>
-      {products.length > 0 ? (
-        <Flex p="20px" justifyContent={"flex-end"}>
+      {filteredProducts.length > 0 ? (
+        <Flex p="20px" justifyContent={"space-between"} w="full">
+          <Flex w="md" gap={4}>
+            <Input placeholder="Search..." bg="white" value={query} onChange={(e) => setQuery(e.target.value)} />
+            <IconButton icon={<FiSearch />} colorScheme="teal" onClick={handleSearch} aria-label="Search" />
+          </Flex>
           <Select value={sortBy} w="base" bg="white" onChange={(e) => sortProducts(e.target.value)}>
             <option value="default">Default Sorting</option>
             <option value="lowToHigh">Price: Low to High</option>
             <option value="highToLow">Price: High to Low</option>
           </Select>
         </Flex>
-      ) : null}
-      {products.length > 0 ? (
+      ) : (
+        <Flex p="20px" justifyContent={"space-between"} w="full">
+          <Flex w="md" gap={4}>
+            <Input placeholder="Search..." bg="white" value={query} onChange={(e) => setQuery(e.target.value)} />
+            <IconButton icon={<FiSearch />} colorScheme="teal" onClick={handleSearch} aria-label="Search" />
+          </Flex>
+        </Flex>
+      )}
+      {filteredProducts.length > 0 ? (
         <SimpleGrid columns={{ base: 1, md: 2, lg: 2, xl: 3 }} spacing="10" p="20px">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <Card key={product.id}>
               <CardBody>
                 <Image src={product.productImageUrl} borderRadius="lg" />
@@ -208,7 +235,7 @@ function Products() {
         </SimpleGrid>
       ) : (
         <SimpleGrid columns={{ base: 1 }} spacing="10" p="20px">
-          <Heading>No Products Added</Heading>
+          <Heading>No Products</Heading>
         </SimpleGrid>
       )}
     </>

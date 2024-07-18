@@ -1,21 +1,6 @@
 {
   "users": [
     {
-      "id": "9ec7c67a-d885-44af-bc05-b9b1b35c782c",
-      "email": "abc@gmail.com",
-      "password": "12345"
-    },
-    {
-      "id": "16378bcd-963a-4039-9e35-15c84b022985",
-      "email": "def@gmail.com",
-      "password": "12345"
-    },
-    {
-      "id": "b4354e28-4278-46f5-809e-c87bb298fb3b",
-      "email": "asdf@gmail.com",
-      "password": "12345"
-    },
-    {
       "id": "b6c09782-ad04-44d4-873e-045275f5d257",
       "email": "email@gmail.com",
       "password": "12345"

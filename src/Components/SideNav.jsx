@@ -1,12 +1,13 @@
 import React from "react";
 import Logo from "../assets/139807.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { List, ListItem, Divider, VStack, HStack, IconButton, Heading } from "@chakra-ui/react";
 import { FiLogOut, FiX, FiBox, FiHome, FiPlusSquare } from "react-icons/fi";
 
 // #5B00FF
 function SideNav(props) {
   const { onClose } = props;
+  const location = useLocation();
   return (
     <VStack w="full" align={"flex-start"} spacing={"7"}>
       <HStack justify={"space-between"}>
@@ -21,7 +22,7 @@ function SideNav(props) {
           </NavLink>
         </ListItem>
         <ListItem _hover={{ backgroundColor: "orange", borderRadius: "5px" }}>
-          <NavLink to="/products" style={{ display: "flex", alignItems: "center", padding: "10px 20px" }}>
+          <NavLink to="/products" key={location.pathname} style={{ display: "flex", alignItems: "center", padding: "10px 20px" }}>
             <FiBox style={{ marginRight: "8px" }} />
             Products
           </NavLink>
